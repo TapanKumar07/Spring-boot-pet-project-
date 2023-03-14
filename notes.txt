@@ -1,0 +1,17 @@
+
+Application.properties is configration file where we store data as key value pairs
+
+DAL Layer(Data Access Layer) Code should be able to communicate with database
+JDBC - java database connectivity APIs
+mySQLDiver, H2Diver - These Drivers implement JDBC APIs
+
+JDBC Apis -> Rules , JDBC drivers -> actual implementation
+
+Hibernate (Object relation mapping) acts as a layer between Java and DB to facilate communication
+App -> ORM --- JDBC Apis -> DB
+ORM abstracts JDBC
+Problem ye thi ki market me ab sab apna apna version bnane lge ORM ka so then comes JDMC Apis into rescue
+JPA -> Java persistent APIs
+H2 - lightweight in memory database
+
+
