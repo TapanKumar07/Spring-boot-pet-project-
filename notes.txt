@@ -14,13 +14,19 @@ Problem ye thi ki market me ab sab apna apna version bnane lge ORM ka so then co
 JPA -> Java persistent APIs
 H2 - lightweight in memory database
 
-@Entity annotation -> tell JPA to create table for this class
-@Id -> define primary key
-@Table(name = "your name") give table name
-Client providing unique id everytime is troublesome so database tum hi sambhaloo
-@GeneratedValue(strategy = GenerationType.AUTO)
+ --> @Entity annotation -> tell JPA to create table for this class
+ --> @Id -> define primary key
+ --> @Table(name = "your name") give table name
+   Client providing unique id everytime is troublesome so database tum hi sambhaloo
+
+ --> @GeneratedValue(strategy = GenerationType.AUTO)
    GenerationType ->
                 1.identity -> incremental value
                 2.sequence
                 3.table
                 4.auto
+
+ --> @Column(name = "CustomName", length = 500, nullable = false)
+
+ --> SpringData Provides functionality of creating CRUD with DB,
+ make a interface and make it extend JPARepositry
