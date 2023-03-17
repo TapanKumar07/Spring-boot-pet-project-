@@ -30,3 +30,32 @@ H2 - lightweight in memory database
 
  --> SpringData Provides functionality of creating CRUD with DB,
  make a interface and make it extend JPARepositry
+-> it will create concrete implementation of interface
+
+== How to support Complex Querires in Spring Data ===
+- provide abstract method in the interface
+
+Relationships ***************************8
+
+@ManyToMany
+@OneToMany
+
+Above are the types of lazy loading . lazy loading simply means that if a class has Many releation with
+other entity then this can cause performance issues as whenever we will make a object or query the class
+all the related class have to loaded which can take time and degrade performance
+By default they are Lazy Loading from Spring's end but we can change it using fetch type
+
+@Column is not applicable when we are using Relations
+
+
+@OneToOne
+@ManyToOne
+Since this is many to one we can load entity pretty fast so there is no need of lazy loading
+this is known as eager fetching
+
+One more problem can occur while making relations between tables and that is creation of one extra table
+which is wasting memory and is of no use so we can avoid that using mapped_by to tell spring
+
+However this is not possible for ManytoMany as we must have a seperate table that has all the relation
+between two tabels
+
