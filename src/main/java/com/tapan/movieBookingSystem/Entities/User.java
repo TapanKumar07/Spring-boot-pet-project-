@@ -4,13 +4,14 @@ import jakarta.persistence.*;
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "Customer")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int customerId;
+    private int userId;
 
     private String firstName;
 
@@ -22,12 +23,27 @@ public class User {
 
     private LocalDateTime dateOfBirth;
 
-    public int getCustomerId() {
-        return customerId;
+    @ElementCollection
+    @CollectionTable(name  = "user_contact_number",
+     joinColumns = @JoinColumn(name = "user_id")
+    )
+    @Column(name = "mobile_number", nullable = false)
+    private Set<Integer> phoneNumbers;
+
+    public int getUserId() {
+        return userId;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public Set<Integer> getPhoneNumbers() {
+        return phoneNumbers;
+    }
+
+    public void setPhoneNumbers(Set<Integer> phoneNumbers) {
+        this.phoneNumbers = phoneNumbers;
     }
 
     public String getFirstName() {
@@ -73,7 +89,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "customerId=" + customerId +
+                "userId=" + userId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", username='" + username + '\'' +

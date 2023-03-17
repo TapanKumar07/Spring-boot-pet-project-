@@ -29,10 +29,10 @@ H2 - lightweight in memory database
  --> @Column(name = "CustomName", length = 500, nullable = false)
 
  --> SpringData Provides functionality of creating CRUD with DB,
- make a interface and make it extend JPARepositry
+ make a interface and make it extend JPA Repository
 -> it will create concrete implementation of interface
 
-== How to support Complex Querires in Spring Data ===
+== How to support Complex Queries in Spring Data ===
 - provide abstract method in the interface
 
 Relationships ***************************8
@@ -40,7 +40,7 @@ Relationships ***************************8
 @ManyToMany
 @OneToMany
 
-Above are the types of lazy loading . lazy loading simply means that if a class has Many releation with
+Above are the types of lazy loading . lazy loading simply means that if a class has Many relation with
 other entity then this can cause performance issues as whenever we will make a object or query the class
 all the related class have to loaded which can take time and degrade performance
 By default they are Lazy Loading from Spring's end but we can change it using fetch type
@@ -56,6 +56,20 @@ this is known as eager fetching
 One more problem can occur while making relations between tables and that is creation of one extra table
 which is wasting memory and is of no use so we can avoid that using mapped_by to tell spring
 
-However this is not possible for ManytoMany as we must have a seperate table that has all the relation
-between two tabels
+However this is not possible for ManytoMany as we must have a separate table that has all the relation
+between two tables
 
+@JoinTable annotation is used to change joined table name
+And we can also configure column names using joinColumns and inverseJoinColumns
+
+For the given entity i want to store collections
+
+Creating a separate entity would be a overkill
+    *******      User -> mobile Number    *******
+
+Referential Integrity
+Suppose there are two tables A and B and A has foreign key pointed to B
+Now referential integrity states that You cannot delete from table B as some foreign key is pointing to it
+
+JPA Cascading ->
+if i am deleting something i should first delete data from its depending table

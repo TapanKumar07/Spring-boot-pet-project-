@@ -3,6 +3,7 @@ package com.tapan.movieBookingSystem.Entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Movie {
@@ -30,6 +31,10 @@ public class Movie {
 
 
 
+    @JoinTable(name = "MovTh", joinColumns = @JoinColumn(name = "movie_id"),
+    inverseJoinColumns = @JoinColumn(name ="theatre_id"))
+    @ManyToMany
+    private List<Theatre> theaters;
     public int getMovieId() {
         return movieId;
     }
