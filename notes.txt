@@ -73,3 +73,20 @@ Now referential integrity states that You cannot delete from table B as some for
 
 JPA Cascading ->
 if i am deleting something i should first delete data from its depending table
+
+Kinds of Cascading ->
+    1.PERSIST -> if you are persisting parent then child will also be stored
+
+    city -> t1, t2, t3
+
+    it will not only store city object in  table but will also have theratre objects saved in theatre table
+
+    2.REMOVE -> if you are removing parent it will also remove all the childs
+    3.REFRESH -> if you are loading parent entity child entity will also be loaded
+    4.MERGE ->
+    5.DETACH ->
+    6.ALL -> if anything happening to parent same should happen with parent
+
+Controller -> Service Layer -> Data Access Layer (Dao)
+
+for good practice Service layer has interfaces and then class implements them for methods using DAO Layer

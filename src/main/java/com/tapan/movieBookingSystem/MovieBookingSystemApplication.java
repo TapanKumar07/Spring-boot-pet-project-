@@ -1,7 +1,9 @@
 package com.tapan.movieBookingSystem;
 
 import com.tapan.movieBookingSystem.Entities.Movie;
+import com.tapan.movieBookingSystem.Exceptions.movieNotFoundException;
 import com.tapan.movieBookingSystem.dao.MovieDao;
+import com.tapan.movieBookingSystem.services.movieService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -16,7 +18,8 @@ public class MovieBookingSystemApplication {
 
 		ApplicationContext ctx = SpringApplication.run(MovieBookingSystemApplication.class, args);
 
-		MovieDao movieDao = ctx.getBean(MovieDao.class);
+		//MovieDao movieDao = ctx.getBean(MovieDao.class);
+		movieService _movieService = ctx.getBean(movieService.class);
 		Movie m = new Movie();
 		m.setDuration(150);
 		m.setCoverPhotoUrl("Cover-photo-url");
@@ -24,8 +27,10 @@ public class MovieBookingSystemApplication {
 		m.setMovieName("John wick 5");
 		m.setReleaseDate(LocalDateTime.of(2022, 2,12,12,12));
 		m.setMovieDescription("This is dog lover movie");
-		Movie mk = movieDao.save(m);
-		System.out.println(mk);
+//		Movie mk = movieDao.save(m);
+		//System.out.println(mk);
+		_movieService.saveMovieDetails(m);
+
 
 //
 		Movie m1 = new Movie();
@@ -36,25 +41,45 @@ public class MovieBookingSystemApplication {
 		m1.setMovieName("Tatya Bichuu");
 		m1.setReleaseDate(LocalDateTime.of(2022, 2,12,12,12));
 		m1.setMovieDescription("This is tatya");
-		movieDao.save(m1);
+//		movieDao.save(m1);
+		_movieService.saveMovieDetails(m1);
 
-//
 		Movie m2 = new Movie();
-		m2.setMovieId(3);
-		m2.setDuration(50);
-		m2.setCoverPhotoUrl("Cover-photo-url");
+		m2.setMovieId(5);
+		m2.setDuration(100);
+		m2.setCoverPhotoUrl("Tanjiroo");
 		m2.setTrailerUrl("trailer - rel");
-		m2.setMovieName("Elon musk");
+		m2.setMovieName("Demon Slayer");
 		m2.setReleaseDate(LocalDateTime.of(2022, 2,12,12,12));
-		m2.setMovieDescription("This is elon");
-		movieDao.save(m2);
+		m2.setMovieDescription("Sword and Battle");
 
 
+		try {
+			_movieService.updateMovieDetails(m2 , 2);
+		} catch (movieNotFoundException e) {
+			System.out.println(e);
+		}
 
-		List<Movie> ans = movieDao.findByDurationLessThan(200);
-        ans.forEach((e) -> System.out.println(e));
+		System.out.println(_movieService.getMoviesList());
+//
+//		Movie m2 = new Movie();
+//		m2.setMovieId(3);
+//		m2.setDuration(50);
+//		m2.setCoverPhotoUrl("Cover-photo-url");
+//		m2.setTrailerUrl("trailer - rel");
+//		m2.setMovieName("Elon musk");
+//		m2.setReleaseDate(LocalDateTime.of(2022, 2,12,12,12));
+//		m2.setMovieDescription("This is elon");
+//		movieDao.save(m2);
+//
+//
+//
+//		List<Movie> ans = movieDao.findByDurationLessThan(200);
+//        ans.forEach((e) -> System.out.println(e));
 
 		//movieDao.delete(m11);
+
+
 		System.out.println("Hello Spring!");
 	}
 
