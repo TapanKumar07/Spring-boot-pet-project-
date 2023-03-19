@@ -12,4 +12,6 @@ public interface UserDao extends JpaRepository<User,Integer> {
     public List<User> findByLastName(String lastName);
 
     public List<User> findByDateOfBirth(LocalDateTime date);
+
+    public User findByUsername(String username);
 }

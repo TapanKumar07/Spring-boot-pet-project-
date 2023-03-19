@@ -1,8 +1,11 @@
 package com.tapan.movieBookingSystem;
 
 import com.tapan.movieBookingSystem.Entities.Movie;
+import com.tapan.movieBookingSystem.Entities.User;
+import com.tapan.movieBookingSystem.Exceptions.UserNameAlreadyExists;
 import com.tapan.movieBookingSystem.Exceptions.movieNotFoundException;
 import com.tapan.movieBookingSystem.dao.MovieDao;
+import com.tapan.movieBookingSystem.services.UserService;
 import com.tapan.movieBookingSystem.services.movieService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -80,7 +83,52 @@ public class MovieBookingSystemApplication {
 		//movieDao.delete(m11);
 
 
+		UserService _userService = ctx.getBean(UserService.class);
+
+		User u1 = new User();
+		u1.setLastName("kumar");
+		u1.setUsername("sigmarek");
+		u1.setFirstName("Tapan");
+		u1.setUserId(1);
+		u1.setDateOfBirth(LocalDateTime.of(2022,03, 22, 12, 12));
+        u1.setPassword("hello");
+
+
+		User u2 = new User();
+		u2.setLastName("kumar");
+		u2.setUsername("sigmarek22");
+		u2.setFirstName("Vijay");
+		u2.setUserId(2);
+		u2.setDateOfBirth(LocalDateTime.of(2022,03, 22, 12, 12));
+		u2.setPassword("hello");
+		try {
+			_userService.saveUserDetails(u1);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+
+		try {
+			_userService.saveUserDetails(u2);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+		User u3 = new User();
+		u3.setLastName("kumar");
+		u3.setUsername("sigmarek21");
+		u3.setFirstName("Keshav");
+		u3.setUserId(3);
+		u3.setDateOfBirth(LocalDateTime.of(2022,03, 22, 12, 12));
+		u3.setPassword("hello");
 		System.out.println("Hello Spring!");
+
+		try{
+			User u = _userService.updateUserDetails(1,u3);
+			System.out.println(u);
+		} catch(Exception e) {
+			System.out.println(e);
+		}
 	}
 
 }
