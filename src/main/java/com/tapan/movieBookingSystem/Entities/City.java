@@ -17,6 +17,11 @@ public class City {
     @OneToMany(mappedBy = "city", fetch = FetchType.EAGER)
 
     Set<Theatre> theaters;
+
+    public City(String cityName) {
+        this.cityName = cityName;
+    }
+
     public City(int cityId, String cityName) {
         this.cityId = cityId;
         this.cityName = cityName;

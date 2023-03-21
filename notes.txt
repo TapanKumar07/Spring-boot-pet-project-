@@ -90,3 +90,23 @@ Kinds of Cascading ->
 Controller -> Service Layer -> Data Access Layer (Dao)
 
 for good practice Service layer has interfaces and then class implements them for methods using DAO Layer
+
+Testing Vs Debugging
+
+Testing is finding if code has problem or not
+Debugging is finding root cause of the problem
+
+J unit -> framework to write test cases and testing
+
+@Test -> whenever we use this method becomes executable and test method
+@BeforeEach -> this will be executed before any kind of test is run
+@AfterEach -> this will be executed after every test is executed
+@BeforeAll -> Only executed only one time in very beginning
+@AfterAll -> In the very end only once
+
+naming convention -> className + test
+
+Assertions -> class provided to actually Pass / Fail tests
+Assertions.assertEquals(actualResult, expectedResult);
+
+@SpringBootTest -> Testing ke time spring ki functionality

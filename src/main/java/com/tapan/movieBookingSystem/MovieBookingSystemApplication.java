@@ -6,10 +6,13 @@ import com.tapan.movieBookingSystem.Exceptions.UserNameAlreadyExists;
 import com.tapan.movieBookingSystem.Exceptions.movieNotFoundException;
 import com.tapan.movieBookingSystem.dao.MovieDao;
 import com.tapan.movieBookingSystem.services.UserService;
+import com.tapan.movieBookingSystem.services.initService;
 import com.tapan.movieBookingSystem.services.movieService;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -129,6 +132,12 @@ public class MovieBookingSystemApplication {
 		} catch(Exception e) {
 			System.out.println(e);
 		}
+	}
+	@Bean
+	CommandLineRunner init(initService initService) {
+		return args -> {
+			initService.init();
+		};
 	}
 
 }
