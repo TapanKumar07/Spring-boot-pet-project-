@@ -85,7 +85,7 @@ Kinds of Cascading ->
     3.REFRESH -> if you are loading parent entity child entity will also be loaded
     4.MERGE ->
     5.DETACH ->
-    6.ALL -> if anything happening to parent same should happen with parent
+    6.ALL -> if anything happening to parent same should happen with child
 
 Controller -> Service Layer -> Data Access Layer (Dao)
 
@@ -110,3 +110,29 @@ Assertions -> class provided to actually Pass / Fail tests
 Assertions.assertEquals(actualResult, expectedResult);
 
 @SpringBootTest -> Testing ke time spring ki functionality
+
+MovieServiceImpl depends on MovieServiceDao
+if i test movie service impl i will not be able to figure out whether problem is in impl or dao
+
+for unit testing i should absolutely make sure that all the depending things are working correctly
+if that is the case only then i can unit test serviceImpl
+
+Strategy for Unit testing
+ * Replace the dependencies with dummy dependencies and test them for returning the correct result
+  -> How to do that ??
+  -> Ensure it returns correct result
+
+  MockItO helps us in doing that
+
+  @Mock - original ni chiye, duplicate chiye
+
+  @InjectMocks -> creates movieServiceImpl object with mocked moviedao
+
+  *says moviedao when save method is called just return object back
+  * doesnt involve actual calling of DB
+  Mockito.when(movieDao.save(Movie)).thenReturn(movie)
+
+
+For Building REST u need support of some external library
+
+ResponseEntity is basically responsible for Converting to JSON and return it

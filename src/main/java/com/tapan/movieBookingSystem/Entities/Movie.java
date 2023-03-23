@@ -35,6 +35,8 @@ public class Movie {
     inverseJoinColumns = @JoinColumn(name ="theatre_id"))
     @ManyToMany
     private List<Theatre> theaters;
+
+    //@Data -> lombok
     public int getMovieId() {
         return movieId;
     }

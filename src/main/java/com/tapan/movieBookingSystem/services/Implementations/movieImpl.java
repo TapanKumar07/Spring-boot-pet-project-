@@ -16,6 +16,7 @@ public class movieImpl implements movieService {
     private MovieDao _moviedao;
     @Override
     public Movie saveMovieDetails(Movie movie) {
+        //set object here
         return _moviedao.save(movie);
     }
 
