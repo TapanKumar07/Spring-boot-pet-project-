@@ -150,3 +150,16 @@ Model Mapper Bean not available -> make use of @Bean annotation to a function
 @RequestBody -> Spring ko hint do ki jo bhi body me json aya h usko convert krdo dto me
 
 @JsonProperty -> used to give custom name to json fields for user
+
+To carefully handle exceptions without using Try Catch Spring internally uses a concept
+called AOP (Aspect Oriented Programming)
+ -> to Achive Loosley coupled App
+
+ Cross cutting concern -> something which needs to be added to all the classes
+       ex -> Logging, Security
+
+ @ControllerAdvice -> global Exception Handler provided by Spring
+ @ExceptionHandler(value = nameOfYourException)
+   dummyFunction() {
+
+   }
