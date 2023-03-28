@@ -8,6 +8,7 @@ import com.tapan.movieBookingSystem.dao.MovieDao;
 import com.tapan.movieBookingSystem.services.UserService;
 import com.tapan.movieBookingSystem.services.initService;
 import com.tapan.movieBookingSystem.services.movieService;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -58,15 +59,15 @@ public class MovieBookingSystemApplication {
 		m2.setMovieName("Demon Slayer");
 		m2.setReleaseDate(LocalDateTime.of(2022, 2,12,12,12));
 		m2.setMovieDescription("Sword and Battle");
+        _movieService.saveMovieDetails(m2);
+
+//		try {
+//			_movieService.updateMovieDetails(m2 , 2);
+//		} catch (movieNotFoundException e) {
+//			System.out.println(e);
+//		}
 
 
-		try {
-			_movieService.updateMovieDetails(m2 , 2);
-		} catch (movieNotFoundException e) {
-			System.out.println(e);
-		}
-
-		System.out.println(_movieService.getMoviesList());
 //
 //		Movie m2 = new Movie();
 //		m2.setMovieId(3);
@@ -138,6 +139,11 @@ public class MovieBookingSystemApplication {
 		return args -> {
 			initService.init();
 		};
+	}
+
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
 	}
 
 }

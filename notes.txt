@@ -136,3 +136,17 @@ Strategy for Unit testing
 For Building REST u need support of some external library
 
 ResponseEntity is basically responsible for Converting to JSON and return it
+
+Jackson is used to Handling JSON/Java object conversion
+Using same java object for storing and updating values might not be an good idea
+and not considered a good practice
+
+Talking to client Dtos (Data Transfer Objects)
+
+Model Mapper class is used to make similar entity
+
+Model Mapper Bean not available -> make use of @Bean annotation to a function
+
+@RequestBody -> Spring ko hint do ki jo bhi body me json aya h usko convert krdo dto me
+
+@JsonProperty -> used to give custom name to json fields for user
