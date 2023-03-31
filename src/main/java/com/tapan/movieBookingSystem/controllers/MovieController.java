@@ -3,6 +3,7 @@ package com.tapan.movieBookingSystem.controllers;
 
 import com.tapan.movieBookingSystem.Entities.Movie;
 import com.tapan.movieBookingSystem.Exceptions.movieNotFoundException;
+import com.tapan.movieBookingSystem.converters.MovieConvertor;
 import com.tapan.movieBookingSystem.dto.MovieDto;
 import com.tapan.movieBookingSystem.services.movieService;
 import org.modelmapper.ModelMapper;
@@ -33,63 +34,34 @@ public class MovieController {
     @Autowired
     private movieService _movieService;
 
-    @Autowired
-    private ModelMapper _modalmapper;
     @GetMapping("/greetings")
     public ResponseEntity Greet() {
         return new ResponseEntity("Hello People", HttpStatus.OK);
     }
 
     @GetMapping("/getAllMovies")
-    public ResponseEntity getAll() {
-        List<Movie> movies = _movieService.getMoviesList();
-
-        List<MovieDto> movieDtos = new ArrayList<>();
-        for(Movie m : movies) {
-             movieDtos.add(covertToMovieDto(m));
-        }
-
-        return new ResponseEntity(movieDtos, HttpStatus.OK);
+    public ResponseEntity<List<MovieDto>> getAll() {
+        return new ResponseEntity<List<MovieDto>>(_movieService.getMoviesList(), HttpStatus.OK);
     }
 
     @GetMapping("/{movieId}")
-    public ResponseEntity getById(@PathVariable(name = "movieId") int movieId) throws movieNotFoundException {
-          Movie movie = _movieService.getMovieDetails(movieId);
-          MovieDto mv = covertToMovieDto(movie);
-          return new ResponseEntity(mv, HttpStatus.OK);
+    public ResponseEntity<MovieDto> getById(@PathVariable(name = "movieId") int movieId) throws movieNotFoundException {
+          return new ResponseEntity<MovieDto>(_movieService.getMovieDetails(movieId), HttpStatus.OK);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
-    produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity createMovie(@RequestBody MovieDto movieDTO) {
-
-           Movie movie = _modalmapper.map(movieDTO, Movie.class);
-           _movieService.saveMovieDetails(movie);
-           MovieDto myMovie = covertToMovieDto(movie);
-           return new ResponseEntity(myMovie, HttpStatus.CREATED);
+    @PostMapping
+    public ResponseEntity<MovieDto> createMovie(@RequestBody MovieDto movieDTO) {
+           return new ResponseEntity<MovieDto>(_movieService.saveMovieDetails(movieDTO), HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/{movieId}", consumes = MediaType.APPLICATION_JSON_VALUE,
-    produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity updateDetails(@PathVariable(name = "movieId") int movieId,@RequestBody MovieDto MovieDTO) throws movieNotFoundException{
-        Movie movie = _movieService.getMovieDetails(movieId);
-
-        Movie to_be_updated_with = _modalmapper.map(MovieDTO, Movie.class);
-        Movie responsee = _movieService.updateMovieDetails(to_be_updated_with, movieId);
-        MovieDto savedResponse = covertToMovieDto(responsee);
-
-        return new ResponseEntity(savedResponse, HttpStatus.ACCEPTED);
+    @PutMapping(value = "/{movieId}")
+    public ResponseEntity<MovieDto> updateDetails(@PathVariable(name = "movieId") int movieId,@RequestBody MovieDto MovieDTO) throws movieNotFoundException{
+        return new ResponseEntity<>(_movieService.updateMovieDetails(MovieDTO, movieId), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping(value = "/{movieId}")
-    public ResponseEntity deleteMovie(@PathVariable(name = "movieId") int id) throws movieNotFoundException {
-        _movieService.deleteMovieDetails(id);
-
-        return new ResponseEntity("DELETED!", HttpStatus.OK);
+    public ResponseEntity<Boolean> deleteMovie(@PathVariable(name = "movieId") int id) throws movieNotFoundException {
+        return new ResponseEntity<Boolean>(_movieService.deleteMovieDetails(id), HttpStatus.OK);
     }
 
-    public MovieDto covertToMovieDto(Movie movie) {
-        MovieDto moviedto = _modalmapper.map(movie, MovieDto.class);
-        return moviedto;
-    }
 }

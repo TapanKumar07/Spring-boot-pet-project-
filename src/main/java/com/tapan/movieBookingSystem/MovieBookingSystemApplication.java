@@ -4,22 +4,26 @@ import com.tapan.movieBookingSystem.Entities.Movie;
 import com.tapan.movieBookingSystem.Entities.User;
 import com.tapan.movieBookingSystem.Exceptions.UserNameAlreadyExists;
 import com.tapan.movieBookingSystem.Exceptions.movieNotFoundException;
+import com.tapan.movieBookingSystem.converters.MovieConvertor;
 import com.tapan.movieBookingSystem.dao.MovieDao;
 import com.tapan.movieBookingSystem.services.UserService;
 import com.tapan.movieBookingSystem.services.initService;
 import com.tapan.movieBookingSystem.services.movieService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
+import java.awt.color.ICC_ColorSpace;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @SpringBootApplication
 public class MovieBookingSystemApplication {
+
 
 	public static void main(String[] args) {
 
@@ -27,6 +31,7 @@ public class MovieBookingSystemApplication {
 
 		//MovieDao movieDao = ctx.getBean(MovieDao.class);
 		movieService _movieService = ctx.getBean(movieService.class);
+		MovieConvertor _convertor = ctx.getBean(MovieConvertor.class);
 		Movie m = new Movie();
 		m.setDuration(150);
 		m.setCoverPhotoUrl("Cover-photo-url");
@@ -36,7 +41,8 @@ public class MovieBookingSystemApplication {
 		m.setMovieDescription("This is dog lover movie");
 //		Movie mk = movieDao.save(m);
 		//System.out.println(mk);
-		_movieService.saveMovieDetails(m);
+
+		_movieService.saveMovieDetails(_convertor.ConvertToMovieDto(m));
 
 
 //
@@ -49,7 +55,7 @@ public class MovieBookingSystemApplication {
 		m1.setReleaseDate(LocalDateTime.of(2022, 2,12,12,12));
 		m1.setMovieDescription("This is tatya");
 //		movieDao.save(m1);
-		_movieService.saveMovieDetails(m1);
+		_movieService.saveMovieDetails(_convertor.ConvertToMovieDto(m1));
 
 		Movie m2 = new Movie();
 		m2.setMovieId(5);
@@ -59,7 +65,7 @@ public class MovieBookingSystemApplication {
 		m2.setMovieName("Demon Slayer");
 		m2.setReleaseDate(LocalDateTime.of(2022, 2,12,12,12));
 		m2.setMovieDescription("Sword and Battle");
-        _movieService.saveMovieDetails(m2);
+        _movieService.saveMovieDetails(_convertor.ConvertToMovieDto(m2));
 
 //		try {
 //			_movieService.updateMovieDetails(m2 , 2);

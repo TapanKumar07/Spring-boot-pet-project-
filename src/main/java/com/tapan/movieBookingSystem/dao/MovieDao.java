@@ -18,7 +18,4 @@ public interface MovieDao extends JpaRepository<Movie, Integer> {
     public List<Movie> findByReleaseDateLessThan(LocalDateTime date);
     public List<Movie> findByReleaseDateGreaterThan(LocalDateTime date);
 
-
-
-
 }

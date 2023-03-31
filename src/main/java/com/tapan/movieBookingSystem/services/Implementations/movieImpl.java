@@ -2,11 +2,14 @@ package com.tapan.movieBookingSystem.services.Implementations;
 
 import com.tapan.movieBookingSystem.Entities.Movie;
 import com.tapan.movieBookingSystem.Exceptions.movieNotFoundException;
+import com.tapan.movieBookingSystem.converters.MovieConvertor;
 import com.tapan.movieBookingSystem.dao.MovieDao;
+import com.tapan.movieBookingSystem.dto.MovieDto;
 import com.tapan.movieBookingSystem.services.movieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,19 +17,26 @@ public class movieImpl implements movieService {
 
     @Autowired
     private MovieDao _moviedao;
+
+    @Autowired
+    private MovieConvertor _convertor;
     @Override
-    public Movie saveMovieDetails(Movie movie) {
+    public MovieDto saveMovieDetails(MovieDto movieDTO) {
         //set object here
-        return _moviedao.save(movie);
+        Movie m = _convertor.ConvertToMovie(movieDTO);
+        Movie saved_movie = _moviedao.save(m);
+        return _convertor.ConvertToMovieDto(saved_movie);
     }
 
     @Override
-    public Movie getMovieDetails(int id) throws movieNotFoundException {
-        return _moviedao.findById(id).orElseThrow(() -> new movieNotFoundException("Movie Details not found!"));
+    public MovieDto getMovieDetails(int id) throws movieNotFoundException {
+
+        Movie m = _moviedao.findById(id).orElseThrow(() -> new movieNotFoundException("Movie Details not found!"));
+        return _convertor.ConvertToMovieDto(m);
     }
 
     @Override
-    public Movie updateMovieDetails(Movie movie, int id) throws movieNotFoundException {
+    public MovieDto updateMovieDetails(MovieDto movie, int id) throws movieNotFoundException {
         Movie retrived_movie = _moviedao.findById(id).orElseThrow(() -> new movieNotFoundException("Movie not found for updation"));
 
         if(movie.getMovieName() != null) retrived_movie.setMovieName(movie.getMovieName());
@@ -41,12 +51,18 @@ public class movieImpl implements movieService {
 
         if(isNotNullOrZero(movie.getCoverPhotoUrl())) retrived_movie.setCoverPhotoUrl(movie.getCoverPhotoUrl());
 
-        return _moviedao.save(retrived_movie);
+        Movie saved_response = _moviedao.save(retrived_movie);
+        return _convertor.ConvertToMovieDto(saved_response);
     }
 
     @Override
-    public List<Movie> getMoviesList() {
-        return _moviedao.findAll();
+    public List<MovieDto> getMoviesList() {
+        List<Movie> movies = _moviedao.findAll();
+        List<MovieDto> movieDtos = new ArrayList<>();
+        for(Movie m : movies) {
+            movieDtos.add(_convertor.ConvertToMovieDto(m));
+        }
+        return movieDtos;
     }
 
     @Override
