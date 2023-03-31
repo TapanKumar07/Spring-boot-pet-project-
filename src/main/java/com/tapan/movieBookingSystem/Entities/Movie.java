@@ -1,11 +1,13 @@
 package com.tapan.movieBookingSystem.Entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Data
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,83 +31,9 @@ public class Movie {
     @Column(length = 500, nullable = false)
     private String trailerUrl;
 
-
-
     @JoinTable(name = "MovTh", joinColumns = @JoinColumn(name = "movie_id"),
     inverseJoinColumns = @JoinColumn(name ="theatre_id"))
     @ManyToMany
     private List<Theatre> theaters;
-
-    //@Data -> lombok
-    public int getMovieId() {
-        return movieId;
-    }
-
-    public void setMovieId(int movieId) {
-        this.movieId = movieId;
-    }
-
-    public String getMovieName() {
-        return movieName;
-    }
-
-    public void setMovieName(String movieName) {
-        this.movieName = movieName;
-    }
-
-    public String getMovieDescription() {
-        return movieDescription;
-    }
-
-    public void setMovieDescription(String movieDescription) {
-        this.movieDescription = movieDescription;
-    }
-
-    public LocalDateTime getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(LocalDateTime releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public String getCoverPhotoUrl() {
-        return coverPhotoUrl;
-    }
-
-    public void setCoverPhotoUrl(String coverPhotoUrl) {
-        this.coverPhotoUrl = coverPhotoUrl;
-    }
-
-    public String getTrailerUrl() {
-        return trailerUrl;
-    }
-
-    public void setTrailerUrl(String trailerUrl) {
-        this.trailerUrl = trailerUrl;
-    }
-
-
-
-    @Override
-    public String toString() {
-        return "Movie{" +
-                "movieId=" + movieId +
-                ", movieName='" + movieName + '\'' +
-                ", movieDescription='" + movieDescription + '\'' +
-                ", releaseDate=" + releaseDate +
-                ", duration=" + duration +
-                ", coverPhotoUrl='" + coverPhotoUrl + '\'' +
-                ", trailerUrl='" + trailerUrl + '\'' +
-                '}';
-    }
 
 }

@@ -1,7 +1,10 @@
 package com.tapan.movieBookingSystem.dto;
 
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
+@Data
 public class MovieDto {
    public int movieId;
    public String movieName;
@@ -11,59 +14,4 @@ public class MovieDto {
    private String coverPhotoUrl;
    private String trailerUrl;
 
-   public int getMovieId() {
-      return movieId;
-   }
-
-   public void setMovieId(int movieId) {
-      this.movieId = movieId;
-   }
-
-   public String getMovieName() {
-      return movieName;
-   }
-
-   public void setMovieName(String movieName) {
-      this.movieName = movieName;
-   }
-
-   public String getMovieDescription() {
-      return movieDescription;
-   }
-
-   public void setMovieDescription(String movieDescription) {
-      this.movieDescription = movieDescription;
-   }
-
-   public LocalDateTime getReleaseDate() {
-      return releaseDate;
-   }
-
-   public void setReleaseDate(LocalDateTime releaseDate) {
-      this.releaseDate = releaseDate;
-   }
-
-   public int getDuration() {
-      return duration;
-   }
-
-   public void setDuration(int duration) {
-      this.duration = duration;
-   }
-
-   public String getCoverPhotoUrl() {
-      return coverPhotoUrl;
-   }
-
-   public void setCoverPhotoUrl(String coverPhotoUrl) {
-      this.coverPhotoUrl = coverPhotoUrl;
-   }
-
-   public String getTrailerUrl() {
-      return trailerUrl;
-   }
-
-   public void setTrailerUrl(String trailerUrl) {
-      this.trailerUrl = trailerUrl;
-   }
 }

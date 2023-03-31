@@ -35,8 +35,8 @@ public class MovieController {
     private movieService _movieService;
 
     @GetMapping("/greetings")
-    public ResponseEntity Greet() {
-        return new ResponseEntity("Hello People", HttpStatus.OK);
+    public ResponseEntity<String> Greet() {
+        return new ResponseEntity<String>("Hello People", HttpStatus.OK);
     }
 
     @GetMapping("/getAllMovies")
